@@ -21,7 +21,7 @@ $ ser -i tun0
 $ ip tuntap add mode tun dev tun0
 $ ip link set tun0 up
 $ ip addr add 192.168.0.3/24 dev tun0
-$ cli -i tun0 -r 10.0.2.15
+$ cli -i tun0 -r 192.168.0.2
 $ ping 192.168.0.2
 ```
 ## for python code 
