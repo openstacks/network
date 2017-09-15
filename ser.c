@@ -65,7 +65,6 @@ int tun_alloc(char *dev, int flags) {
 void usage(void) {
   fprintf(stderr, "Usage:\n");
   fprintf(stderr, "-i <ifacename>: Name of interface to use (mandatory)\n");
-  fprintf(stderr, "-u|-a: use TUN (-u, default) or TAP (-a)\n");
   fprintf(stderr, "-h: prints this help text\n");
   exit(1);
 }
@@ -73,7 +72,7 @@ void usage(void) {
 int main(int argc, char *argv[]) {
   
   int tap_fd, option;
-  int flags = IFF_TUN;
+  int flags = IFF_TAP;
   char if_name[IFNAMSIZ] = "";
   uint16_t nread, nwrite, plength;
   char buffer[BUFSIZE];
@@ -86,19 +85,13 @@ int main(int argc, char *argv[]) {
   int maxfd; 
 
   /* Check command line options */
-  while((option = getopt(argc, argv, "i:uah")) > 0) {
+  while((option = getopt(argc, argv, "ih")) > 0) {
     switch(option) {
       case 'h':
         usage();
         break;
       case 'i':
         strncpy(if_name,optarg, IFNAMSIZ-1);
-        break;
-      case 'u':
-        flags = IFF_TUN;
-        break;
-      case 'a':
-        flags = IFF_TAP;
         break;
       default:
         printf("Unknown option %c\n", option);

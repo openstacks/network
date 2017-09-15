@@ -63,11 +63,8 @@ int tun_alloc(char *dev, int flags) {
  **************************************************************************/
 void usage(void) {
   fprintf(stderr, "Usage:\n");
-  fprintf(stderr, "-i <ifacename> [-r <serverIP>]  [-f <flag>] [-u|-a]\n");
-  fprintf(stderr, "-h\n");
   fprintf(stderr, "-i <ifacename>: Name of interface to use (mandatory)\n");
   fprintf(stderr, "-r <serverIP>:  specify server address (-f <serverIP>) (mandatory)\n");
-  fprintf(stderr, "-u|-a: use TUN (-u, default) or TAP (-a)\n");
   fprintf(stderr, "-h: prints this help text\n");
   exit(1);
 }
@@ -75,7 +72,7 @@ void usage(void) {
 int main(int argc, char *argv[]) {
   
   int tap_fd, option;
-  int flags = IFF_TUN;
+  int flags = IFF_TAP;
   char if_name[IFNAMSIZ] = "";
   uint16_t nread, nwrite, plength;
   char buffer[BUFSIZE];
@@ -87,7 +84,7 @@ int main(int argc, char *argv[]) {
   unsigned long int tap2net = 0, net2tap = 0;
 
   /* Check command line options */
-  while((option = getopt(argc, argv, "r:i:uafh")) > 0) {
+  while((option = getopt(argc, argv, "r:i:h")) > 0) {
     switch(option) {
       case 'h':
         usage();
@@ -97,12 +94,6 @@ int main(int argc, char *argv[]) {
         break;
       case 'r':
         strncpy(remote_ip,optarg,15);
-        break;
-      case 'u':
-        flags = IFF_TUN;
-        break;
-      case 'a':
-        flags = IFF_TAP;
         break;
       default:
         printf("Unknown option %c\n", option);
