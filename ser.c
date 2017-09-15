@@ -28,6 +28,11 @@
  * https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/         *
  * Documentation/networking/tuntap.txt?id=HEAD                                      *  
  ***********************************************************************************/
+/**************************************************************************
+ * tun_alloc: allocates or reconnects to a tun/tap device. The caller     *
+ *            needs to reserve enough space in *dev.                      *
+ **************************************************************************/
+
 int tun_alloc(char *dev, int flags) {
 
   struct ifreq ifr;
